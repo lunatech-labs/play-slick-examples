@@ -1,0 +1,3 @@
+GET /                  controllers.Application.index
+
+GET /getting-started   controllers.Application.gettingStarted

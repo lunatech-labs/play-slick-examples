@@ -1,0 +1,20 @@
+@import models.database.Cocktails
+@import play.api.db.slick.Config.driver.simple._
+
+@main("Getting started with Play and Slick") {
+
+  <h2>Source code</h2>
+
+  <h3>Slick table mapping</h3>
+  <pre><code class="prettyprint">@play.api.libs.Files.readFile(new java.io.File("app/models/database/Cocktails.scala"))</code></pre>
+
+
+  <h2>Generated SQL</h2>
+
+  <h3>DDL statement</h3>
+  <pre><code class="prettyprint">@Cocktails.ddl.createStatements.mkString</code></pre>
+
+  <h3>Query</h3>
+  <pre><code class="prettyprint">@Query(Cocktails).selectStatement</code></pre>
+
+}
