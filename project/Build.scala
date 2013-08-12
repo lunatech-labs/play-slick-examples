@@ -9,6 +9,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     "com.typesafe.play" %% "play-slick" % "0.4.0"
+//    "mysql" % "mysql-connector-java" % "5.1.18"
   )
 
 
