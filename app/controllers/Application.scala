@@ -9,6 +9,13 @@ object Application extends Controller {
   }
   
   def gettingStarted = Action {
+    import play.api.Logger
+    import models.database.Cocktails
+    import play.api.db.slick.Config.driver.simple._
+
+    Logger.debug(Cocktails.ddl.createStatements.mkString)
+    Logger.debug(Query(Cocktails).selectStatement)
+
     Ok(views.html.gettingStarted())
   }
 
