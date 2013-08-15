@@ -12,9 +12,9 @@
   <h2>Generated SQL</h2>
 
   <h3>DDL statement</h3>
-  <pre><code class="prettyprint">@Cocktails.ddl.createStatements.mkString</code></pre>
+  <pre><code class="prettyprint">@controllers.Application.cocktails.ddl.createStatements.mkString</code></pre>
 
   <h3>Query</h3>
-  <pre><code class="prettyprint">@Query(Cocktails).selectStatement</code></pre>
+  <pre><code class="prettyprint">@Query(controllers.Application.cocktails).selectStatement</code></pre>
 
 }

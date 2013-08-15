@@ -1,0 +1,13 @@
+@(cocktails: List[(Long, String)])
+
+@main("Query results") {
+
+
+  <table>
+  <tr><th>ID</th><th>NAME</th></tr>
+  @for((id, name) <- cocktails) {
+    <tr><td>@id</td><td>@name</td></tr>
+  }
+  </table>
+
+}
