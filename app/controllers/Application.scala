@@ -1,38 +1,41 @@
 package controllers
 
 import play.api.mvc._
-import play.api.db.slick.Config.driver.simple._
-
-import models.database.Cocktails
 import play.api.Logger
+import models.Cocktail
 
 object Application extends Controller {
 
-  val cocktails = new Cocktails
 
   def index = Action {
     Ok(views.html.index())
   }
 
+  /**
+   * Use logging and a view template to inspect generated SQL.
+   */
   def gettingStarted = Action {
-    import play.api.Logger
     import models.database.Cocktails
+    import play.api.Logger
     import play.api.db.slick.Config.driver.simple._
 
-    Logger.debug(cocktails.ddl.createStatements.mkString)
-    Logger.debug(Query(cocktails).selectStatement)
+    Logger.debug((new Cocktails).ddl.createStatements.mkString)
+    Logger.debug(Query(new Cocktails).selectStatement)
 
     Ok(views.html.gettingStarted())
   }
 
+  def columnDefinitions = Action {
+    Ok(views.html.columnDefinitions())
+  }
+
+  /**
+   * Render the results of a simple query.
+   */
   def query = Action {
-    import play.api.Play.current
-    import play.api.db.slick.DB
-    DB.withSession { implicit session: scala.slick.session.Session =>
-      val results = Query(cocktails).list
-      Logger.debug(results.mkString("\n"))
-      Ok(views.html.query(results))
-    }
+    val results = Cocktail.find
+    Logger.debug(results.mkString("\n"))
+    Ok(views.html.query(results))
   }
 
 }

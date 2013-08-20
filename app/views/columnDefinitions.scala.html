@@ -1,0 +1,17 @@
+@import models.database._
+@import play.api.db.slick.Config.driver.simple._
+
+@main("Column definitions") {
+
+  <h2>Source code</h2>
+
+  <h3>Slick table mapping</h3>
+  <pre><code class="prettyprint">@play.api.libs.Files.readFile(new java.io.File("app/models/database/Cocktails2.scala"))</code></pre>
+
+
+  <h2>Generated SQL</h2>
+
+  <h3>DDL statements</h3>
+  <pre><code style="white-space: pre-wrap" class="prettyprint">@((new Cocktails2).ddl.createStatements.mkString("\n\n").replace(",", ",\n  "))</code></pre>
+
+}
