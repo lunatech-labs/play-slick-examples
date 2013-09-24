@@ -20,7 +20,7 @@ object Global extends GlobalSettings {
       application.configuration.getConfig(configKey).foreach { configuration =>
         configuration.keys.foreach { database =>
           val databaseConfiguration = configuration.getString(database).getOrElse{
-            throw configuration.reportError(database, "Expected key " + database + " but could not get its values!", None)
+            throw configuration.reportError(database, "Missing values for key " + database, None)
           }
           val packageNames = databaseConfiguration.split(",").toSet
           val ddls = TableScanner.reflectAllDDLMethods(packageNames, application.classloader)
