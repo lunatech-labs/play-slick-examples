@@ -1,5 +1,10 @@
 GET /                  controllers.Application.index
 
-GET /getting-started      controllers.Application.gettingStarted
-GET /column-definitions   controllers.Application.columnDefinitions
-GET /query                controllers.Application.query
+GET /getting-started               controllers.Application.gettingStarted
+GET /column-definitions            controllers.Application.columnDefinitions
+GET /query                         controllers.Application.query
+
+GET /defining-queries              controllers.Application.definingQueries
+GET /defining-queries-controller   controllers.Application.definingQueriesController
+GET /defining-queries-dbaction     controllers.Application.definingQueriesDBAction
+

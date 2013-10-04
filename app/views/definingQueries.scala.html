@@ -1,0 +1,11 @@
+@(names: List[String])
+
+@main("Defining queries") {
+
+  <p>Cocktail names:</p>
+  <ul>
+  @for(name <- names) {
+    <li>@name</li>
+  }
+  </ul>
+}

@@ -4,6 +4,7 @@ import models.database.Cocktails
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick.DB
+import scala.slick.session.Session
 
 
 /**
@@ -17,7 +18,14 @@ object Cocktail {
   /**
    * Returns the results of a simple query (finder method).
    */
-  def find = DB.withSession { implicit session: scala.slick.session.Session =>
+  def find: List[(Long, String)] = DB.withSession { implicit session: scala.slick.session.Session =>
     Query(Cocktail.table).list
+  }
+
+  /**
+   * Query for values
+   */
+  def findNames: List[String] = DB.withSession { implicit session: Session =>
+    Query(table).map(_.name).list
   }
 }

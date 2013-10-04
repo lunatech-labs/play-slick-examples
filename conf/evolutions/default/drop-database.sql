@@ -7,4 +7,6 @@ alter table "COCKTAIL" drop constraint "MAIN_INGREDIENT_FK"
 
 drop table "COCKTAIL"
 
+drop table "COCKTAIL"
+
 drop table "INGREDIENT"
