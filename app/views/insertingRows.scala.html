@@ -1,0 +1,26 @@
+@(cocktails: List[Cocktail5])(implicit flash: Flash)
+
+@main("Defining queries") {
+
+  <form method="POST" action="@routes.Application.insert">
+    <p>
+      <select name="insert">
+        <option value="tuple">Insert Tuple</option>
+        <option value="tuples">Insert Three Tuples</option>
+        <option value="instance">Insert case class</option>
+        <option value="returning">Insert returning ID</option>
+      </select>
+      <button>Add Cocktail</button>
+    </p>
+    @flash.get("success").map { message =>
+      <p>@message</p>
+    }
+  </form>
+
+  <h3>Cocktails</h3>
+  <ol>
+  @for(cocktail<- cocktails) {
+    <li>@cocktail.price @cocktail.name</li>
+  }
+  </ol>
+}

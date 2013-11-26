@@ -1,12 +1,14 @@
 package controllers
 
-import models.Cocktail
+import models.{Cocktail5, Cocktail}
 import models.database.Cocktails
 import play.api.mvc.{ Action, Controller}
 import play.api.Logger
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick._
+import play.api.data.Form
+import play.api.data.Forms._
 
 object Application extends Controller {
 
@@ -63,4 +65,33 @@ object Application extends Controller {
     Ok(views.html.definingQueries(names))
   }
 
+  /**
+   * Inserts a database row, optionally using the version of the model function that returns the inserted ID.
+   */
+  def insert = Action { implicit request =>
+    Form(single("insert" -> nonEmptyText)).bindFromRequest.fold(
+      formWithErrors => BadRequest(formWithErrors.errorsAsJson),
+      insert => insert match {
+        case "tuple" => {
+          Cocktail5.insertTuple(Cocktail5.random)
+          Redirect(routes.Application.insertingRows).flashing("success" -> s"Inserted tuple")
+        }
+        case "tuples" => {
+          Cocktail5.insertTuples(Cocktail5.random, Cocktail5.random, Cocktail5.random)
+          Redirect(routes.Application.insertingRows).flashing("success" -> s"Inserted three tuples")
+        }
+        case "instance" => {
+          Cocktail5.insert(Cocktail5.random)
+          Redirect(routes.Application.insertingRows).flashing("success" -> s"Inserted case class instance")
+        }
+        case "returning" => {
+          val id = Cocktail5.insertReturningId(Cocktail5.random)
+          Redirect(routes.Application.insertingRows).flashing("success" -> s"Inserted instance returning ID $id")
+        }
+      })
+  }
+
+  def insertingRows = Action { implicit request =>
+    Ok(views.html.insertingRows(Cocktail5.find))
+  }
 }

@@ -6,16 +6,17 @@ import org.joda.money.{CurrencyUnit, Money}
 import java.math.RoundingMode
 
 /**
- * Getting started: simple table definition.
+ * Case class custom mapping extracted to separate functions.
  */
 class Cocktails6 extends Table[Cocktail]("COCKTAIL") {
 
-  def id = column[Long]("ID")
+  def id = column[Long]("ID", O.AutoInc)
   def name = column[String]("NAME")
   def priceCurrency = column[String]("PRICE_CURRENCY")
   def priceAmount = column[BigDecimal]("PRICE_AMOUNT", O.DBType("DECIMAL(13,3)"))
 
   def * = id.? ~ name ~ priceCurrency ~ priceAmount <> (mapRow _, unMapRow _)
+  def forInsert = * returning id
 
   private def mapRow(id: Option[Long], name: String, currency: String, amount: BigDecimal): Cocktail = {
     Cocktail(id, name, money(currency, amount))

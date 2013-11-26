@@ -9,4 +9,10 @@ drop table "COCKTAIL"
 
 drop table "COCKTAIL"
 
+drop table "COCKTAIL"
+
+drop table "COCKTAIL"
+
+drop table "COCKTAIL"
+
 drop table "INGREDIENT"

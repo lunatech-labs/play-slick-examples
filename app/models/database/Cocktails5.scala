@@ -6,9 +6,10 @@ import org.joda.money.{CurrencyUnit, Money}
 import java.math.RoundingMode
 
 /**
- * Getting started: simple table definition.
+ * Case class custom mapping.
  */
 class Cocktails5 extends Table[Cocktail]("COCKTAIL") {
+
   def id = column[Long]("ID")
   def name = column[String]("NAME")
   def priceCurrency = column[String]("PRICE_CURRENCY")

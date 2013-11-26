@@ -8,3 +8,5 @@ GET /defining-queries              controllers.Application.definingQueries
 GET /defining-queries-controller   controllers.Application.definingQueriesController
 GET /defining-queries-dbaction     controllers.Application.definingQueriesDBAction
 
+GET  /insert   controllers.Application.insertingRows
+POST /insert   controllers.Application.insert

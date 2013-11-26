@@ -4,7 +4,7 @@ import play.api.db.slick.Config.driver.simple._
 import models.Cocktail
 
 /**
- * Getting started: simple table definition.
+ * Case class mapping.
  */
 class Cocktails4 extends Table[Cocktail]("COCKTAIL") {
   def id = column[Long]("ID")
