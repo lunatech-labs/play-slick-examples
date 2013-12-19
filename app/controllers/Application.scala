@@ -60,7 +60,7 @@ object Application extends Controller {
     }
   }
 
-  def definingQueriesDBAction = DBAction { implicit requestSession: DBSessionRequest =>
+  def definingQueriesDBAction = DBAction { implicit requestSession =>
     val names = Query(new Cocktails).map(_.name).list
     Ok(views.html.definingQueries(names))
   }
