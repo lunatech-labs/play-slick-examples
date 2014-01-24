@@ -1,4 +1,12 @@
-@(cocktails: List[Cocktail5])(implicit flash: Flash)
+@(cocktails: List[Cocktail5], similarities: List[(Cocktail5, Cocktail5)])(implicit flash: Flash)
+
+@selectCocktail(name: String) = {
+  <select name="@name">
+  @for(cocktail <- cocktails) {
+    <option value="@cocktail.id">@cocktail.name</option>
+  }
+  </select>
+}
 
 @main("Defining queries") {
 
@@ -19,8 +27,27 @@
 
   <h3>Cocktails</h3>
   <ol>
-  @for(cocktail<- cocktails) {
+  @for(cocktail <- cocktails) {
     <li>@cocktail.price @cocktail.name</li>
+  }
+  </ol>
+
+  <h3>Similar cocktails</h3>
+
+
+  <form method="POST" action="@routes.Application.link">
+    <p>
+      @selectCocktail("first") @selectCocktail("second")
+      <button>Insert Tuple</button>
+    </p>
+    @flash.get("link-success").map { message =>
+    <p>@message</p>
+    }
+  </form>
+
+  <ol>
+  @for(pair <- similarities) {
+    <li>@pair._1.name - @pair._2.name</li>
   }
   </ol>
 }

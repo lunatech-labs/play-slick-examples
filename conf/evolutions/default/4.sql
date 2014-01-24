@@ -1,0 +1,8 @@
+# --- !Ups
+
+create table SIMILARITY (FIRST_COCKTAIL_ID BIGINT NOT NULL,SECOND_COCKTAIL_ID BIGINT NOT NULL);
+alter table SIMILARITY add constraint SIMILARITY_PK primary key(FIRST_COCKTAIL_ID,SECOND_COCKTAIL_ID);
+
+# --- !Downs
+
+drop table SIMILARITY;

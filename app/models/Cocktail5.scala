@@ -1,13 +1,11 @@
 package models
 
-import models.database.{Cocktails6 => Cocktails, Cocktails3}
+import models.database.{Cocktails6 => Cocktails, Similarities, Cocktails3}
 import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick.DB
 import scala.slick.session.Session
-import org.joda.money.{CurrencyUnit, Money}
-import scala.util.Random._
-import java.math.RoundingMode
+import org.joda.money.Money
 
 case class Cocktail5(id: Option[Long], name: String, price: Money)
 
@@ -19,6 +17,7 @@ object Cocktail5 {
 
   /** Table definition */
   val table = new Cocktails
+  val similarities = new Similarities
 
   /**
    * Returns the results of a simple query (finder method).
@@ -27,12 +26,29 @@ object Cocktail5 {
     Query(table).list
   }
 
+  /**
+   * Returns a list of cocktail pairs that are similar.
+   */
+  def findSimilar: List[(Cocktail5, Cocktail5)] = DB.withSession { implicit session: Session =>
+    val query = for {
+      similarity <- similarities
+      first <- table if first.id === similarity.firstId
+      second <- table if second.id === similarity.secondId
+    } yield first -> second
+    query.list
+  }
+
   def insert(cocktail: Cocktail5): Unit = DB.withSession { implicit session: Session =>
     table.insert(cocktail)
   }
 
   def insertReturningId(cocktail: Cocktail5): Long = DB.withSession { implicit session: Session =>
     table.forInsert.insert(cocktail)
+  }
+
+  def link(firstId: Long, secondId: Long): Unit = DB.withSession { implicit session: Session =>
+//    (new Similarities).insert(firstId, secondId)
+    (new Similarities).insertAll(firstId -> secondId, secondId -> firstId)
   }
 
   def insertTuple(cocktail: Cocktail5): Long = DB.withSession { implicit session: Session =>
@@ -54,6 +70,9 @@ object Cocktail5 {
    * Returns a random cocktail.
    */
   def random = {
+    import org.joda.money.CurrencyUnit
+    import scala.util.Random._
+    import java.math.RoundingMode
     val names = List("Margarita", "Caipirinha", "Piña Colada")
     val price = Money.of(CurrencyUnit.EUR, 6.0 + nextDouble * 2.0, RoundingMode.DOWN)
     Cocktail5(None, names(nextInt(names.length)), price)

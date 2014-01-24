@@ -16,3 +16,7 @@ drop table "COCKTAIL"
 drop table "COCKTAIL"
 
 drop table "INGREDIENT"
+
+alter table "SIMILARITY" drop constraint "pk_myTable2"
+
+drop table "SIMILARITY"

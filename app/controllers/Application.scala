@@ -92,6 +92,17 @@ object Application extends Controller {
   }
 
   def insertingRows = Action { implicit request =>
-    Ok(views.html.insertingRows(Cocktail5.find))
+    Ok(views.html.insertingRows(Cocktail5.find, Cocktail5.findSimilar))
+  }
+
+  def link = Action { implicit request =>
+    val form = Form(tuple("first" -> number, "second" -> number))
+    form.bindFromRequest.fold(
+      formWithErrors => BadRequest(formWithErrors.errorsAsJson),
+      pair => {
+        Logger.debug(s"Link (${pair._1}, ${pair._2}")
+        Cocktail5.link(pair._1, pair._2)
+        Redirect(routes.Application.insertingRows).flashing("link-success" -> s"Inserted tuple")
+      })
   }
 }

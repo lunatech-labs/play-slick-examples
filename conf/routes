@@ -10,3 +10,4 @@ GET /defining-queries-dbaction     controllers.Application.definingQueriesDBActi
 
 GET  /insert   controllers.Application.insertingRows
 POST /insert   controllers.Application.insert
+POST /link     controllers.Application.link
